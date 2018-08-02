@@ -9,7 +9,6 @@
 		<script type="text/javascript" src="js/jquery.qrcode.js" ></script>
         <script type="text/javascript" src="js/utf.js" ></script>
 		<div id="qrcodeCanvas"></div>
-		<img id="img" style="width: 200px;" src="">
 		<button id="onloadbtn">下载</button>
 		<script>
 			jQuery('#qrcodeCanvas').qrcode({
@@ -28,13 +27,6 @@
                 image.src = canvas.find("canvas")[0].toDataURL("image/"+type);
                 return image;
             }
-            var type = 'png';
-            var qrcodeimg=convertCanvasToImage($('#qrcodeCanvas'),"image/"+type);
-            $('#img').src=qrcodeimg.src;
-
-
-            // 加工image data，替换mime type
-            //qrcodeimg.src = qrcodeimg.src.replace(type,'image/octet-stream');
 
             /**
              * 在本地进行文件保存
@@ -51,11 +43,12 @@
                 save_link.dispatchEvent(event);
             };
 
-            // 下载后的问题名
-            var filename = 'qrcode_' + (new Date()).getTime() + '.' + type;
-            // download
-
             $('#onloadbtn').click(function () {
+                var type = 'png';
+                var qrcodeimg=convertCanvasToImage($('#qrcodeCanvas'),"image/"+type);
+                // 下载后的问题名
+                var filename = 'qrcode_' + (new Date()).getTime() + '.' + type;
+                // download
                 saveFile(qrcodeimg.src,filename);
             })
 		</script>
